@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3a58b25ffd.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<style>
+    main {
+        width: 80%;
+        margin: auto;
+        text-align: center;
+        background-color: rgb(214, 255, 255);
+    }
+    
+    input {
+        margin: 2rem 0;
+        width: 20%;
+        padding: 1.5rem 3rem;
+        border-radius: 10px;
+        border: 1px solid #000;
+        font-size: 1.5rem;
+    }
+    
+    li {
+        font-size: 2rem;
+        list-style: none;
+        padding: 0 1rem;
+    }
+    
+    .style {
+        font-size: 1.5rem;
+    }
+    
+    .container {
+        border: 1px solid black;
+        width: 80%;
+        height: 50vh;
+        margin: auto;
+    }
+    
+    ul {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+    
+    #btn {
+        padding: 1rem;
+    }
+    
+    .removed {
+        background-color: #ff2e2e;
+        padding: 1rem;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <main>
+        <h1>What Are You Doing Today <i class="far fa-smile"></i></h1>
+        <input type="text" placeholder="Add ToDo">
+        <button id="btn">Add</button>
+    </main>
+    <div class="container">
+    </div>
+</body>
+<script src="toDo.js"></script>
+</body>
+
+</html>

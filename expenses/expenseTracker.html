@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="expenseTracker.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>EXPENSE TRACKER</h1>
+    <h2>Add A New Item</h2>
+    <section>
+        <div class="form">
+            <div class="expenses">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Expense Name">
+                <div class="otherExpenses">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" placeholder="mm/dd/yyyy">
+                    <label for="amount">Amount</label>
+                    <input type="text" id="amount" name="amount">
+                </div>
+            </div>
+            <button id="expense-btn">Add Expense</button>
+        </div>
+    </section>
+    <table class="toc">
+        <div class="head">
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </div>
+        <tbody>
+            <tr>
+                <td class="name"></td>
+                <td class="date"></td>
+                <td class="amount"></td>
+                <td class="btn"></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <h3 class="my-expense-container"></h3>
+    <h3 class="placeholder">No expenses added yet !</h3>
+    <script src="expenseTracker.js"></script>
+</body>
+
+</html>

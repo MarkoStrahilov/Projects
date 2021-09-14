@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Benne&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+    font-size: 18px;
+}
+
+#news {
+    font-family: 'Benne', sans-serif;
+    font-size: 2rem;
+    padding: 0 2rem;
+    padding: 1rem;
+    background-color: rgb(14, 92, 128);
+    color: #fff;
+}
+
+section {
+    background-color: #ebebeb;
+    width: 50%;
+    margin: auto;
+    border: 1px solid black;
+    text-align: center;
+    padding: 2rem;
+}
+
+.makeWay {
+    margin-top: 3rem;
+}
