@@ -1,5 +1,4 @@
 const Campground = require('./models/campground')
-const mongoose = require('mongoose')
 
 const campgrounds = [{
         title: "Cheney Reservoir",

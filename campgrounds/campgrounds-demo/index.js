@@ -1,7 +1,10 @@
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
-const Campground = require('./models/campground')
+const homeRoute = require('./routes/campgrounds')
+const detailsRoute = require('./routes/details')
+const newCampRoute = require('./routes/new')
+
 const app = express()
 app.listen(3000, () => {
     console.log('PORT 3000')
@@ -21,4 +24,12 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
     res.render('home')
+})
+app.use('/campgrounds', homeRoute)
+app.use('/campground', detailsRoute)
+app.use('/create-new-campground', newCampRoute)
+
+app.use((err, req, res, next) => {
+    const { message, status } = err
+    res.status(status).send(message)
 })
