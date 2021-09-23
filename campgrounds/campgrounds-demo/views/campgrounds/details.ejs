@@ -17,6 +17,13 @@
     <p>
         <%=foundCamp.description %>
     </p>
+    <div style="display: flex;">
+        <a style="margin: 0 2rem;" href="/campgrounds/<%= foundCamp._id%>/edit">Edit Campground</a>
+        <form action="/campgrounds/<%= foundCamp._id%>?_method=DELETE" method="POST">
+            <button>Delete Campground</button>
+        </form>
+    </div>
+    <a href="/campgrounds">All Campgrounds</a>
 </body>
 
 </html>

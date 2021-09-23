@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/campgrounds/<%=foundCamp._id %>?_method=PUT" method="POST">
+        <div>
+            <label for="title">Campground Title</label>
+            <input type="text" name="title" id="title" placeholder="Title" value="<%=foundCamp.title %>">
+        </div>
+        <div>
+            <label for="price">Campground Price</label>
+            <input type="text" name="price" id="price" placeholder="Price" value="<%=foundCamp.price %>">
+        </div>
+        <div>
+            <label for="description">Campground Description</label>
+            <input type="text" name="description" id="description" placeholder="Description" value="<%=foundCamp.description%>">
+        </div>
+        <div>
+            <label for="location">Campground Location</label>
+            <input type="text" name="location" id="location" placeholder="Location" value="<%=foundCamp.location %>">
+        </div>
+        <button>Update</button>
+    </form>
+</body>
+
+</html>
