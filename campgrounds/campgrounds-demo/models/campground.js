@@ -17,7 +17,8 @@ const campgroundSchema = new Schema({
     location: {
         type: String,
         required: true
-    }
+    },
+    image: String
 })
 
 const Campground = mongoose.model('Campground', campgroundSchema)

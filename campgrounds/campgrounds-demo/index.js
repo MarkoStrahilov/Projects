@@ -1,5 +1,7 @@
 const express = require('express')
 const path = require('path')
+const session = require('express-session')
+const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const campRoute = require('./routes/campgrounds')
@@ -7,6 +9,8 @@ const app = express()
 app.listen(3000, () => {
     console.log('PORT 3000')
 })
+
+const sessionOptions = { secret: 'thisisnotagoodsecret', resave: false, saveUninitialized: false }
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, })
     .then(() => {
@@ -20,6 +24,8 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(__dirname + "/public"))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(session(sessionOptions))
+app.use(flash())
 
 app.get('/', (req, res) => {
     res.render('campgrounds/home')

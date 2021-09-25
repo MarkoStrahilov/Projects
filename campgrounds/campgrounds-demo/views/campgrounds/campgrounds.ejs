@@ -9,15 +9,23 @@
 </head>
 
 <body>
+    <p>
+        <%=messages %>
+    </p>
     <%for(let camp of foundCamp) {%>
         <h1>
             <%=camp.title %>
         </h1>
-        <a href="/campgrounds/<%= camp._id%>">Details</a>
-        <%}%>
-            <div style="margin-top: 2rem;">
-                <a href="/campgrounds/new">Add New Campground</a>
+        <%if(camp.image){%>
+            <div>
+                <img src="<%=camp.image %>" height="300px" width="300px" alt="">
             </div>
+            <%} %>
+                <a href="/campgrounds/<%= camp._id%>">Details</a>
+                <%}%>
+                    <div style="margin-top: 2rem;">
+                        <a href="/campgrounds/new">Add New Campground</a>
+                    </div>
 </body>
 
 </html>

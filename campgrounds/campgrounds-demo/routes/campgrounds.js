@@ -3,7 +3,6 @@ const Campground = require('../models/campground')
 const CustomError = require('../CustomError')
 const router = express.Router()
 
-
 const asyncErrorHandle = (fn) => {
     return function(req, res, next) {
         fn(req, res).catch(err => next(err))
@@ -15,7 +14,7 @@ router.get('/', asyncErrorHandle(async(req, res) => {
     if (!foundCamp) {
         throw new CustomError('Cant Find Camp', 404)
     }
-    res.render('campgrounds/campgrounds', { foundCamp })
+    res.render('campgrounds/campgrounds', { foundCamp, messages: req.flash('success') })
 }))
 
 router.get('/new', (req, res) => {
@@ -37,6 +36,7 @@ router.post('/', asyncErrorHandle(async(req, res) => {
         throw new CustomError('cant create new camp', 403)
     }
     await newCamp.save()
+    req.flash('success', 'created new camp')
     res.redirect('/campgrounds')
 }))
 
@@ -52,10 +52,11 @@ router.put('/:id', asyncErrorHandle(async(req, res) => {
     res.redirect(`/campgrounds/${updateCamp._id}`)
 }))
 
-router.delete('/:id', asyncErrorHandle(async(req, res) => {
+router.delete('/:id', async(req, res) => {
     const { id } = req.params
-    await Campground.deleteOne({ id })
+    await Campground.findByIdAndDelete(id)
     res.redirect('/campgrounds')
-}))
+})
+
 
 module.exports = router

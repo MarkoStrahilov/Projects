@@ -11,12 +11,12 @@
 
 <body>
     <div class="container">
-        <h1>Create New Campground</h1>
+        <h1 class="m-3 text-center">Create New Campground</h1>
         <div>
             <form action="/campgrounds" class="needs-validation" method="POST" novalidate>
                 <div>
                     <label for="title">Campground Title</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
+                    <input type="text" class="m-3 form-control" name="title" id="title" placeholder="Title" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div>
                     <label for="price">Campground Price</label>
-                    <input type="text" class="form-control" name="price" id="price" placeholder="Price" required>
+                    <input type="text" class="m-3 form-control" name="price" id="price" placeholder="Price" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -36,7 +36,7 @@
                 </div>
                 <div>
                     <label for="description">Campground Description</label>
-                    <input type="text" class="form-control" name="description" id="description" placeholder="Description" required>
+                    <input type="text" class="m-3 form-control" name="description" id="description" placeholder="Description" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <label for="location">Campground Location</label>
-                    <input type="text" class="form-control" name="location" id="location" placeholder="Location" required>
+                    <input type="text" class="m-3 form-control" name="location" id="location" placeholder="Location" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -54,9 +54,19 @@
                         Invalid Field
                     </div>
                 </div>
-                <button class="btn btn-primary">Add</button>
+                <div>
+                    <label for="campground-image">Campground Image</label>
+                    <input type="text" class="m-3 form-control" name="image" id="campground-image" placeholder="Insert Image">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Invalid Field
+                    </div>
+                </div>
+                <button class="m-3 btn btn-primary">Add</button>
             </form>
-            <a href="/campgrounds">Back</a>
+            <a class="m-3" href="/campgrounds">Back To Campgrounds</a>
         </div>
     </div>
     <script>
