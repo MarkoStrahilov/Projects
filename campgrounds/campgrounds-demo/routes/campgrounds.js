@@ -27,7 +27,7 @@ router.get('/:id', asyncErrorHandle(async(req, res) => {
     if (!foundCamp) {
         throw new CustomError('Cant Find Camp', 404)
     }
-    res.render('campgrounds/details', { foundCamp })
+    res.render('campgrounds/details', { foundCamp, messages: req.flash('success') })
 }))
 
 router.post('/', asyncErrorHandle(async(req, res) => {
@@ -49,6 +49,7 @@ router.get('/:id/edit', asyncErrorHandle(async(req, res) => {
 router.put('/:id', asyncErrorHandle(async(req, res) => {
     const { id } = req.params
     const updateCamp = await Campground.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
+    req.flash('success', 'successfuly updated campground')
     res.redirect(`/campgrounds/${updateCamp._id}`)
 }))
 
