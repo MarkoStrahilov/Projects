@@ -48,7 +48,7 @@ router.get('/:id/edit', asyncErrorHandle(async(req, res) => {
 
 router.put('/:id', asyncErrorHandle(async(req, res) => {
     const { id } = req.params
-    const updateCamp = await Campground.findByIdAndUpdate(id, req.body)
+    const updateCamp = await Campground.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
     res.redirect(`/campgrounds/${updateCamp._id}`)
 }))
 
