@@ -36,16 +36,6 @@
                         </div>
                     </div>
                     <div>
-                        <label for="description">Campground Description</label>
-                        <input type="text" class="m-3 form-control" name="description" id="description" placeholder="Description" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Invalid Field
-                        </div>
-                    </div>
-                    <div>
                         <label for="location">Campground Location</label>
                         <input type="text" class="m-3 form-control" name="location" id="location" placeholder="Location" required>
                         <div class="valid-feedback">
@@ -56,8 +46,20 @@
                         </div>
                     </div>
                     <div>
-                        <label for="campground-image">Campground Image</label>
-                        <input type="text" class="m-3 form-control" name="image" id="campground-image" placeholder="Insert Image" required>
+                        <label for="image">Campground Image</label>
+                        <input type="text" class="m-3 form-control" name="image" id="image" placeholder="Image URL" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Invalid Field
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="description">Campground Description</label>
+                            <textarea class="m-3 form-control" id="description" name="description" style="height: 100px" placeholder="Description" required></textarea>
+                        </div>
                         <div class="valid-feedback">
                             Looks good!
                         </div>

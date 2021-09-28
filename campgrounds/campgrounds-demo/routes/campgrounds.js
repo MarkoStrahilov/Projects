@@ -31,12 +31,8 @@ router.get('/:id', asyncErrorHandle(async(req, res) => {
 }))
 
 router.post('/', asyncErrorHandle(async(req, res) => {
-    const newCamp = new Campground(req.body)
-    if (!newCamp) {
-        throw new CustomError('cant create new camp', 403)
-    }
-    await newCamp.save()
-    req.flash('success', 'created new camp')
+    const newCampground = new Campground(req.body)
+    await newCampground.save()
     res.redirect('/campgrounds')
 }))
 
@@ -44,6 +40,7 @@ router.get('/:id/edit', asyncErrorHandle(async(req, res) => {
     const { id } = req.params
     const foundCamp = await Campground.findById(id)
     res.render('campgrounds/edit', { foundCamp })
+    req.flash('success', 'created new camp')
 }))
 
 router.put('/:id', asyncErrorHandle(async(req, res) => {

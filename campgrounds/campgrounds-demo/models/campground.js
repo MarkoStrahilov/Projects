@@ -8,7 +8,8 @@ const campgroundSchema = new Schema({
     },
     price: {
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
     description: {
         type: String,
@@ -18,7 +19,9 @@ const campgroundSchema = new Schema({
         type: String,
         required: true
     },
-    image: String
+    image: {
+        type: String
+    }
 })
 
 const Campground = mongoose.model('Campground', campgroundSchema)
