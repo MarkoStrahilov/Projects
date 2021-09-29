@@ -31,6 +31,9 @@ router.get('/:id', asyncErrorHandle(async(req, res) => {
 }))
 
 router.post('/', asyncErrorHandle(async(req, res) => {
+    if (!req.body) {
+        throw new CustomError('Invalid Data', 404)
+    }
     const newCampground = new Campground(req.body)
     await newCampground.save()
     res.redirect('/campgrounds')
