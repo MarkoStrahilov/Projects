@@ -2,11 +2,11 @@ const express = require('express')
 const path = require('path')
 const session = require('express-session')
 const flash = require('connect-flash')
+const Joi = require('joi')
 const mongoose = require('mongoose')
 const CustomError = require('./CustomError')
 const methodOverride = require('method-override')
 const campRoute = require('./routes/campgrounds')
-const { stat } = require('fs')
 const app = express()
 app.listen(3000, () => {
     console.log('PORT 3000')
@@ -39,5 +39,5 @@ app.all('*', (req, res, next) => {
 })
 app.use((err, req, res, next) => {
     const { message = 'Something went wrong', status = 500 } = err;
-    res.status(status).send(message)
+    res.status(status).render('errorMsg', { err })
 })
