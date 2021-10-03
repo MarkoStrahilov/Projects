@@ -7,3 +7,8 @@ module.exports.validateCampground = Joi.object({
     location: Joi.string().required(),
     image: Joi.string().required()
 })
+
+module.exports.validateReviews = Joi.object({
+    text: Joi.string().required(),
+    rating: Joi.number().required().min(0).max(5)
+})

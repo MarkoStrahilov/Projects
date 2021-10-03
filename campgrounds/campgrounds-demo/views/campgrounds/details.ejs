@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/campgrounds-demo/styles/index.css">
     <title>
         <%=foundCamp.title %> | Yelp-Camp
     </title>
@@ -13,17 +14,12 @@
 
 <body>
     <%-include('partials/nav') %>
-        <% if (messages && messages.length) {%>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success</strong>
-                <%=messages %>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <% }%>
-                <div class="col container">
+        <%-include('partials/flash') %>
+            <div class="row container m-auto">
+                <div class="col-8 container">
                     <div class="card">
                         <%if(foundCamp.image){%>
-                            <img src="<%=foundCamp.image %>" class="card-img-top" style="width: 50%;" alt="campground image">
+                            <img src="<%=foundCamp.image %>" class="card-img-top" style="width: 100%;" alt="campground image">
                             <% } %>
                                 <div class="card-body">
                                     <h5 class="card-title">
@@ -43,10 +39,52 @@
                             <button class="btn btn-primary m-lg-3">Edit Campground</button>
                         </form>
                     </div>
+                </div>
+                <div class="col-4">
+                    <h2 class="mt-3">Leave a review</h2>
+                    <form action="/campgrounds/<%= foundCamp._id %>/reviews" method="POST" class="validate-form mt-3" novalidate>
+                        <div class="mb-3">
+                            <label for="rating-range" class="form-label">Rating</label>
+                            <input type="range" min="0" max="5" class="form-range" id="rating-range" name="rating">
+                        </div>
+                        <div class="mb-3">
+                            <label for="review-txt" class="form-label">Review</label>
+                            <textarea class="form-control" name="text" id="review-txt" cols="30" rows="3" required></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Field Can't Be Empty
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">Leave review</button>
+                    </form>
+                    <%if(foundCamp.reviews) { %>
+                        <%for(let review of foundCamp.reviews) { %>
+                            <h3 class="mt-5">Campground Reviews</h3>
+                            <div class="mt-4 review-model card">
+                                <div class="card-body">
+                                    <p class="card-title">Review Rating:
+                                        <%= review.rating %>
+                                    </p>
+                                    <p class="card-text">Review Context:
+                                        <%= review.text %>
+                                    </p>
+                                    <form action="/campgrounds/<%=foundCamp._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <% } %>
+                                <%} else { %>
+                                    <h3 class="mt-3">No Reviews Yet</h3>
+                                    <% }%>
 
                 </div>
-                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+            </div>
+            <script src="/js/detailsForm.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
 </body>
 
 </html>
