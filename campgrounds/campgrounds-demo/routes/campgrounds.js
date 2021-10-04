@@ -1,35 +1,10 @@
 const express = require('express')
 const Campground = require('../models/campground')
 const CustomError = require('../CustomError')
-const { validateCampground, validateReviews } = require('../validation/validation')
+const { asyncErrorHandle, validateCamp, validateReview } = require('../utilities/utilities')
 const Review = require('../models/review')
 const router = express.Router()
 
-const asyncErrorHandle = (fn) => {
-    return function(req, res, next) {
-        fn(req, res).catch(err => next(err))
-    }
-}
-
-const validateCamp = (req, res, next) => {
-    const { error } = validateCampground.validate(req.body)
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new CustomError(msg, 400)
-    } else {
-        next()
-    }
-}
-
-const validateReview = (req, res, next) => {
-    const { error } = validateReviews.validate(req.body)
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new CustomError(msg, 400)
-    } else {
-        next()
-    }
-}
 
 
 router.get('/', asyncErrorHandle(async(req, res) => {

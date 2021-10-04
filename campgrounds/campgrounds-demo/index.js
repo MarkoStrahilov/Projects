@@ -1,3 +1,5 @@
+// Require Files
+
 const express = require('express')
 const path = require('path')
 const session = require('express-session')
@@ -6,10 +8,20 @@ const mongoose = require('mongoose')
 const CustomError = require('./CustomError')
 const methodOverride = require('method-override')
 const campRoute = require('./routes/campgrounds')
+const registerRoute = require('./routes/register')
+const User = require('./models/user')
+const passport = require('passport')
+const localStrategy = require('passport-local')
 const app = express()
 app.listen(3000, () => {
     console.log('PORT 3000')
 })
+
+//
+
+
+// Database & Sessions
+
 
 const sessionOptions = {
     secret: 'thisisnotagoodsecret',
@@ -29,13 +41,30 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true,
         console.log('mongoose error connection', err)
     })
 
+
+//
+
+
+// Middleware
+
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
 app.use(session(sessionOptions))
 app.use(flash())
+
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new localStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+//
+
 
 app.use((req, res, next) => {
     res.locals.success = req.flash('success')
@@ -46,7 +75,14 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.render('campgrounds/home')
 })
+
+app.get('/fakeUser', async(req, res) => {
+    const newUser = new User({ email: 'markocar@gmail.com', username: 'mar4e1' })
+    const registeredUser = await User.register(newUser, 'pass123')
+    console.log(registeredUser)
+})
 app.use('/campgrounds', campRoute)
+app.use('/register', registerRoute)
 
 app.all('*', (req, res, next) => {
     next(new CustomError('ERROR', 404))
