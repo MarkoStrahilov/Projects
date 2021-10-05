@@ -7,9 +7,14 @@ const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const CustomError = require('./CustomError')
 const methodOverride = require('method-override')
+
+// routes
 const campRoute = require('./routes/campgrounds')
 const registerRoute = require('./routes/register')
+const loginRoute = require('./routes/login')
+
 const User = require('./models/user')
+
 const passport = require('passport')
 const localStrategy = require('passport-local')
 const app = express()
@@ -67,22 +72,20 @@ passport.deserializeUser(User.deserializeUser())
 
 
 app.use((req, res, next) => {
-    res.locals.success = req.flash('success')
-    res.locals.error = req.flash('error')
-    next()
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
 })
 
 app.get('/', (req, res) => {
     res.render('campgrounds/home')
 })
 
-app.get('/fakeUser', async(req, res) => {
-    const newUser = new User({ email: 'markocar@gmail.com', username: 'mar4e1' })
-    const registeredUser = await User.register(newUser, 'pass123')
-    console.log(registeredUser)
-})
 app.use('/campgrounds', campRoute)
 app.use('/register', registerRoute)
+app.use('/login', loginRoute)
+
 
 app.all('*', (req, res, next) => {
     next(new CustomError('ERROR', 404))

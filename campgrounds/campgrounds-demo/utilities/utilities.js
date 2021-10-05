@@ -36,3 +36,12 @@ module.exports.validateUsers = (req, res, next) => {
         next()
     }
 }
+
+module.exports.authenticated = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.flash('error', 'you must be signed in')
+        return res.redirect('/login')
+    } else {
+        next()
+    }
+}

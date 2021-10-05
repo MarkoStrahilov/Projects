@@ -28,7 +28,10 @@
                                     <p class="card-text">
                                         <%=foundCamp.description %>
                                     </p>
-                                    <p class="card-text">Cost Per Night - <small class="text-muted"> <%= foundCamp.price %>$</small></p>
+                                    <p class="card-text"> Cost Per Night - <small class="text-muted"> <%= foundCamp.price %>$</small></p>
+                                    <p class="card-text">By
+                                        <span class="text-muted"><%=foundCamp.user.username %></span>
+                                    </p>
                                 </div>
                     </div>
                     <div class="d-flex">
