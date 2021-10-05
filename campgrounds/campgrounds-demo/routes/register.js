@@ -1,13 +1,13 @@
 const express = require('express')
 const User = require('../models/user')
 const router = express.Router()
-const { asyncErrorHandle } = require('../utilities/utilities')
+const { asyncErrorHandle, validateUsers } = require('../utilities/utilities')
 
 router.get('/', (req, res) => {
     res.render('campgrounds/register')
 })
 
-router.post('/', asyncErrorHandle(async(req, res) => {
+router.post('/', validateUsers, asyncErrorHandle(async(req, res) => {
     try {
         const { email, username, password } = req.body
         const newUser = new User({ email, username })

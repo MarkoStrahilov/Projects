@@ -12,3 +12,9 @@ module.exports.validateReviews = Joi.object({
     text: Joi.string().required(),
     rating: Joi.number().required().min(0).max(5)
 })
+
+module.exports.validateUser = Joi.object({
+    email: Joi.string().required(),
+    username: Joi.string().required(),
+    password: Joi.string().required().min(6)
+})
