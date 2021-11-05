@@ -1,10 +1,11 @@
 const express = require('express')
 const Campground = require('../models/campground')
 const CustomError = require('../CustomError')
-const { asyncErrorHandle, validateCamp, validateReview, authenticated } = require('../utilities/utilities')
+const { asyncErrorHandle, validateCamp, validateReview, authenticated, isOwner } = require('../utilities/utilities')
 const Review = require('../models/review')
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 const router = express.Router()
-
 
 
 router.get('/', asyncErrorHandle(async(req, res) => {
@@ -29,16 +30,12 @@ router.get('/:id', asyncErrorHandle(async(req, res) => {
     res.render('campgrounds/details', { foundCamp })
 }))
 
-router.post('/', authenticated, validateCamp, asyncErrorHandle(async(req, res) => {
-    const newCampground = new Campground(req.body)
-    newCampground.user = req.user._id
-    console.log(newCampground)
-    await newCampground.save()
-    req.flash('success', 'Successfully made a new campground')
-    res.redirect('/campgrounds')
+router.post('/', upload.single('image'), authenticated, asyncErrorHandle(async(req, res) => {
+    console.log(req.body, req.file)
+    res.send('success')
 }))
 
-router.get('/:id/edit', authenticated, asyncErrorHandle(async(req, res) => {
+router.get('/:id/edit', authenticated, isOwner, asyncErrorHandle(async(req, res) => {
     const { id } = req.params
     const foundCamp = await Campground.findById(id)
     if (!foundCamp) {
@@ -49,21 +46,21 @@ router.get('/:id/edit', authenticated, asyncErrorHandle(async(req, res) => {
     req.flash('success', 'created new camp')
 }))
 
-router.put('/:id', authenticated, validateCamp, asyncErrorHandle(async(req, res) => {
+router.put('/:id', authenticated, isOwner, validateCamp, asyncErrorHandle(async(req, res) => {
     const { id } = req.params
     const updateCamp = await Campground.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
     req.flash('success', 'successfuly updated campground')
     res.redirect(`/campgrounds/${updateCamp._id}`)
 }))
 
-router.delete('/:id', authenticated, async(req, res) => {
+router.delete('/:id', authenticated, isOwner, asyncErrorHandle(async(req, res) => {
     const { id } = req.params
     await Campground.findByIdAndDelete(id)
     req.flash('error', 'deleted campground')
     res.redirect('/campgrounds')
-})
+}))
 
-router.post('/:id/reviews', authenticated, validateReview, asyncErrorHandle(async(req, res) => {
+router.post('/:id/reviews', authenticated, isOwner, validateReview, asyncErrorHandle(async(req, res) => {
     const { id } = req.params;
     const foundCampground = await Campground.findById(id)
     const newReview = new Review(req.body)
@@ -74,7 +71,7 @@ router.post('/:id/reviews', authenticated, validateReview, asyncErrorHandle(asyn
     res.redirect(`/campgrounds/${foundCampground._id}`)
 }))
 
-router.delete('/:id/reviews/:reviewId', authenticated, asyncErrorHandle(async(req, res) => {
+router.delete('/:id/reviews/:reviewId', authenticated, isOwner, asyncErrorHandle(async(req, res) => {
     const { id, reviewId } = req.params
     await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
     await Review.findByIdAndDelete(reviewId)

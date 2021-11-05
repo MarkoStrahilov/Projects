@@ -1,3 +1,8 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
+
 // Require Files
 
 const express = require('express')
@@ -9,18 +14,18 @@ const CustomError = require('./CustomError')
 const methodOverride = require('method-override')
 
 // routes
+
 const campRoute = require('./routes/campgrounds')
 const registerRoute = require('./routes/register')
 const loginRoute = require('./routes/login')
-
 const User = require('./models/user')
-
 const passport = require('passport')
 const localStrategy = require('passport-local')
 const app = express()
 app.listen(3000, () => {
     console.log('PORT 3000')
 })
+
 
 //
 
@@ -59,6 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
+
 app.use(session(sessionOptions))
 app.use(flash())
 
@@ -67,6 +73,7 @@ app.use(passport.session())
 passport.use(new localStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
+
 
 //
 
@@ -85,7 +92,11 @@ app.get('/', (req, res) => {
 app.use('/campgrounds', campRoute)
 app.use('/register', registerRoute)
 app.use('/login', loginRoute)
-
+app.get('/log-out', (req, res) => {
+    req.logOut()
+    req.flash('success', 'user log out')
+    res.redirect('/campgrounds')
+})
 
 app.all('*', (req, res, next) => {
     next(new CustomError('ERROR', 404))

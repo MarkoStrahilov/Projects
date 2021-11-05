@@ -14,10 +14,10 @@
         <div class="container">
             <h1 class="m-3 text-center">Create New Campground</h1>
             <div>
-                <form action="/campgrounds" class="needs-validation" method="POST" novalidate>
+                <form action="/campgrounds" class="needs-validation" method="POST" novalidate enctype="multipart/form-data">
                     <div>
                         <label for="title">Campground Title</label>
-                        <input type="text" class="m-3 form-control" name="title" id="title" placeholder="Title" required>
+                        <input type="text" class="m-3 form-control" name="title" id="title" placeholder="Title">
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div>
                         <label for="image">Campground Image</label>
-                        <input type="text" class="m-3 form-control" name="image" id="image" placeholder="Image URL" required>
+                        <input type="file" class="m-3 form-control" name="image" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>

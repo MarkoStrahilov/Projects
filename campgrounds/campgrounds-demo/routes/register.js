@@ -1,5 +1,4 @@
 const express = require('express')
-const Campground = require('../models/campground')
 const User = require('../models/user')
 const router = express.Router()
 const { asyncErrorHandle, validateUsers } = require('../utilities/utilities')
