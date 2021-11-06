@@ -3,8 +3,9 @@ const Campground = require('../models/campground')
 const CustomError = require('../CustomError')
 const { asyncErrorHandle, validateCamp, validateReview, authenticated, isOwner } = require('../utilities/utilities')
 const Review = require('../models/review')
+const { storage } = require('../cloudinary')
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ storage })
 const router = express.Router()
 
 
@@ -30,9 +31,13 @@ router.get('/:id', asyncErrorHandle(async(req, res) => {
     res.render('campgrounds/details', { foundCamp })
 }))
 
-router.post('/', upload.single('image'), authenticated, asyncErrorHandle(async(req, res) => {
-    console.log(req.body, req.file)
-    res.send('success')
+router.post('/', upload.single('image'), validateCamp, authenticated, asyncErrorHandle(async(req, res) => {
+    const newCampground = new Campground(req.body);
+    newCampground.user = req.user._id
+    newCampground.image.url = req.file.path;
+    newCampground.image.filename = req.file.filename;
+    await newCampground.save()
+    res.redirect(`/campgrounds/${newCampground._id}`)
 }))
 
 router.get('/:id/edit', authenticated, isOwner, asyncErrorHandle(async(req, res) => {

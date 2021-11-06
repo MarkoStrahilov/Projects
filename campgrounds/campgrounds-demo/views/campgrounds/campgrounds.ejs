@@ -16,9 +16,11 @@
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <%if(camp.image) { %>
-                                <img src="<%=camp.image %>" class="img-fluid rounded-start" alt="campground image">
-                                <% } %>
+                            <%if(camp.images) { %>
+                                <% for(let img of camp.images) {%>
+                                    <img src="<%=img.url %>" class="img-fluid rounded-start" alt="campground image">
+                                    <% } %>
+                                        <% } %>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">

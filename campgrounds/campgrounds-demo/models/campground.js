@@ -21,7 +21,8 @@ const campgroundSchema = new Schema({
         required: true
     },
     image: {
-        type: String
+        url: String,
+        filename: String
     },
     user: {
         type: Schema.Types.ObjectId,
