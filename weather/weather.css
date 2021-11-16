@@ -9,13 +9,17 @@
 
 body {
     background: url('https://www.desktopbackground.org/download/o/2011/11/23/301566_beautiful-hd-wallpapers-weather-and-phenomena-backgrounds_1920x1080_h.jpg');
+}
+
+main {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 100vh;
+    height: 50vh;
 }
 
 h1 {
+    text-align: center;
     font-size: 2.5rem;
     padding: 1rem 0;
     color: #fff;
@@ -27,18 +31,14 @@ form {
     align-items: center;
 }
 
-input[type="text"] {
+#search {
     width: 60%;
     padding: 1rem;
     border-radius: 1rem;
     border: none;
 }
 
-input[type="text"]:default {
-    border: none;
-}
-
-button {
+#search-btn {
     padding: 1rem;
     background-color: transparent;
     border-radius: 50%;
@@ -54,7 +54,7 @@ button:hover {
 }
 
 .container {
-    transform: translateY(7rem);
+    transform: translateY(3rem);
     width: 85%;
     margin: auto;
     background: url('https://cdn.pixabay.com/photo/2016/03/27/07/32/clouds-1282314_960_720.jpg');
@@ -69,28 +69,10 @@ button:hover {
     margin-bottom: 1.3rem;
 }
 
-.temp {
+.element-styles {
     text-align: start;
     font-size: 1.5rem;
     padding: .5rem;
-}
-
-.speed {
-    padding: .5rem;
-    font-size: 1.5rem;
-    text-align: start;
-}
-
-.humidity {
-    padding: .5rem;
-    font-size: 1.5rem;
-    text-align: start;
-}
-
-.weather {
-    padding: .5rem;
-    font-size: 1.5rem;
-    text-align: start;
 }
 
 .imgStyle {
@@ -119,7 +101,7 @@ span {
 }
 
 .myStyle {
-    padding: 2.5rem;
+    padding: 1rem;
     margin: 2rem;
 }
 
@@ -127,4 +109,38 @@ span {
     display: none;
     color: #303030;
     padding: 1rem;
+}
+
+.location-map-container {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.btn-map {
+    padding: .5rem 1.5rem;
+    background-color: #f0ad4e;
+    border: none;
+    border-radius: 1rem;
+    transition: all .3s linear;
+}
+
+.btn-map:hover {
+    box-shadow: 1px 11px 8px -3px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 1px 11px 8px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 11px 8px -3px rgba(0, 0, 0, 0.75);
+    background: #c3d100;
+}
+
+#map {
+    display: none;
+    width: 400px;
+}
+
+.map-container {
+    text-align: center;
+    transform: translateX(-200px);
+}
+
+.map-btn-style {
+    background: #5cb85c;
 }

@@ -1,7 +1,10 @@
-const h1 = document.querySelector('h1');
-h1.style.textAlign = 'center';
+// tokens
+const mapToken = 'pk.eyJ1IjoibXN0cmFoaWxvdiIsImEiOiJja3cybnk4OG8wMzI5MndweHpqamE1b3o1In0.rZTnuAklg7cwiqdL2Xicdw'
+
+
 const form = document.querySelector('form');
 const input = document.querySelector('input');
+const btn = document.querySelector('#search-btn')
 const body = document.querySelector('body');
 const container = document.querySelector('.container');
 const weatherInLocation = document.querySelector('.weatherinLocation')
@@ -11,16 +14,18 @@ const humidityInLocation = document.querySelector('.humidityInLocation')
 const theWeatherInLocation = document.querySelector('.theWeatherInLocation')
 const weatherImgInLocation = document.querySelector('.weatherImgInLocation')
 const temperatureInLocationItalicText = document.querySelector('.temperatureInLocation span')
-const displayAllH3 = document.querySelectorAll('.weatherStyles h3')
 
 form.addEventListener('submit', async function(e) {
     try {
         e.preventDefault()
         const inputValue = form.elements.searchLocation.value;
-        const res = await axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + inputValue + '&appid=712a3f2932621a75cf87e4e875febe7f')
+        const res = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=712a3f2932621a75cf87e4e875febe7f`)
         if (res == undefined || res == '') {
             console.error('ERROR NO RESPONSE FOUND')
         }
+
+        // select elements
+
         const locationName = res.data.name;
         cityName(locationName)
         const cityTemperature = res.data.main.temp;
@@ -34,12 +39,37 @@ form.addEventListener('submit', async function(e) {
         windSpeed(cityWindSpeed, cityWindSpeedDeg)
         const cityHumidity = res.data.main.humidity
         humidity(cityHumidity)
-        toggleStyle()
-        form.elements.searchLocation.value = '';
+        document.querySelector('#search').value = '';
+
+        // display map
+
+        const longitude = res.data.coord.lon;
+        const latitude = res.data.coord.lat;
+        mapboxgl.accessToken = 'pk.eyJ1IjoibXN0cmFoaWxvdiIsImEiOiJja3cybnk4OG8wMzI5MndweHpqamE1b3o1In0.rZTnuAklg7cwiqdL2Xicdw';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [longitude, latitude],
+            zoom: 9
+        });
+
+        //map markers
+        const marker = new mapboxgl.Marker()
+            .setLngLat([longitude, latitude])
+            .addTo(map);
+
     } catch (err) {
         console.log('OOPS AN ERROR OCCURRED', err)
     }
 })
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibXN0cmFoaWxvdiIsImEiOiJja3cybnk4OG8wMzI5MndweHpqamE1b3o1In0.rZTnuAklg7cwiqdL2Xicdw';
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-74.5, 40],
+    zoom: 9
+});
 
 const createNewImg = function(mySrc) {
     weatherImgInLocation.src = `https://openweathermap.org/img/w/${mySrc}.png`
@@ -71,3 +101,9 @@ function cityWeather(weather) {
     theWeatherInLocation.textContent = `Current Weather is  ${weather}`
     theWeatherInLocation.classList.add('weather')
 }
+
+const mapBtn = document.querySelector('.btn-map')
+mapBtn.addEventListener('click', () => {
+    document.querySelector('#map').style.display = 'initial'
+    mapBtn.classList.add('map-btn-style')
+})
