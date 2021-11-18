@@ -103,7 +103,19 @@ function cityWeather(weather) {
 }
 
 const mapBtn = document.querySelector('.btn-map')
+
+
+let count = 0;
+
 mapBtn.addEventListener('click', () => {
-    document.querySelector('#map').style.display = 'initial'
-    mapBtn.classList.add('map-btn-style')
+    count++
+    if (count % 2 === 0) {
+        document.querySelector('#map').style.display = 'initial';
+        mapBtn.classList.add('map-btn-style');
+        mapBtn.textContent = 'Collapse';
+    } else {
+        document.querySelector('#map').style.display = 'none'
+        mapBtn.classList.remove('map-btn-style');
+        mapBtn.textContent = 'Show Map';
+    }
 })
