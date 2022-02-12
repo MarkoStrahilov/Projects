@@ -20,9 +20,6 @@ form.addEventListener('submit', async function(e) {
         e.preventDefault()
         const inputValue = form.elements.searchLocation.value;
         const res = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=712a3f2932621a75cf87e4e875febe7f`)
-        if (res == undefined || res == '') {
-            console.error('ERROR NO RESPONSE FOUND')
-        }
 
         // select elements
 
@@ -45,6 +42,11 @@ form.addEventListener('submit', async function(e) {
 
         const longitude = res.data.coord.lon;
         const latitude = res.data.coord.lat;
+        
+        if(!longitude && !latitude) {
+            document.querySelector('#map').textContent = 'Please Select A Location First'
+        }
+
         mapboxgl.accessToken = 'pk.eyJ1IjoibXN0cmFoaWxvdiIsImEiOiJja3cybnk4OG8wMzI5MndweHpqamE1b3o1In0.rZTnuAklg7cwiqdL2Xicdw';
         const map = new mapboxgl.Map({
             container: 'map',
